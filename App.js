@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { View } from 'react-native';
+import styles from './style/style';
+import Header from './components/Header'
+import Footer from './components/Footer'
+import BottomNavigator from './components/BottomNagivator.js'; 
+import { horizontalScale, verticalScale, moderateScale } from './components/Metrics';
+import { ExerciseProvider } from './components/ExerciseContext'; // Import ExerciseProvider
+
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ExerciseProvider>
+      <NavigationContainer>
+        <View style={styles.container}>
+          <Header style={{ width: horizontalScale(100), height: verticalScale(50) }} />
+          <Footer style={{ marginBottom: moderateScale(20) }} />
+          <BottomNavigator />
+        </View>
+      </NavigationContainer>
+    </ExerciseProvider>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
