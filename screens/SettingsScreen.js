@@ -1,48 +1,62 @@
 import React, { useState } from 'react';
-import { View, Text, Switch, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, Button, Alert } from 'react-native';
+import { RadioButton } from 'react-native-paper'; // Import RadioButton from react-native-paper
 import { useExerciseContext } from '../components/ExerciseContext'; // Import the hook
 
 const SettingsScreen = () => {
-    const { clearExerciseHistory, metricUnits, setMetricUnits } = useExerciseContext(); // Import the function to clear history
-    const [isClearing, setIsClearing] = useState(false); // State to track clearing history loading
-  
-    const handleToggleUnits = (value) => {
-      setMetricUnits(value); // Update metricUnits in the context
-    };
-  
-    const handleClearHistory = () => {
-      Alert.alert(
-        'Clear History',
-        'Are you sure you want to clear the exercise history?',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
+  const { clearExerciseHistory, metricUnits, setMetricUnits } = useExerciseContext(); // Import the function to clear history
+  const [isClearing, setIsClearing] = useState(false); // State to track clearing history loading
+
+  const handleToggleUnits = (value) => {
+    setMetricUnits(value); // Update metricUnits in the context
+  };
+
+  const handleClearHistory = () => {
+    Alert.alert(
+      'Clear History',
+      'Are you sure you want to clear the exercise history?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            setIsClearing(true); // Set loading state
+            clearExerciseHistory(); // Clear exercise history
+            setIsClearing(false); // Reset loading state
           },
-          {
-            text: 'OK',
-            onPress: () => {
-              setIsClearing(true); // Set loading state
-              clearExerciseHistory(); // Clear exercise history
-              setIsClearing(false); // Reset loading state
-            },
-          },
-        ]
-      );
-    };
-  
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Settings</Text>
-        <View style={styles.switchContainer}>
-          <Text style={styles.text}>Units</Text>
-          <Switch value={metricUnits} onValueChange={handleToggleUnits} />
-          <Text style={styles.text}>{metricUnits ? 'Metric' : 'Imperial'}</Text>
-        </View>
-        <Button title="Clear History" onPress={handleClearHistory} disabled={isClearing} />
-      </View>
+        },
+      ]
     );
   };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Settings</Text>
+      <View style={styles.radioContainer}>
+        <View style={styles.radioButtonContainer}>
+          <RadioButton
+            value="metric"
+            status={metricUnits ? 'checked' : 'unchecked'}
+            onPress={() => handleToggleUnits(true)}
+          />
+          <Text style={styles.radioLabel}>Metric</Text>
+        </View>
+        <View style={styles.radioButtonContainer}>
+          <RadioButton
+            value="imperial"
+            status={metricUnits ? 'unchecked' : 'checked'}
+            onPress={() => handleToggleUnits(false)}
+          />
+          <Text style={styles.radioLabel}>Imperial</Text>
+        </View>
+      </View>
+      <Button title="Clear History" onPress={handleClearHistory} disabled={isClearing} />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -54,12 +68,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
   },
-  switchContainer: {
+  radioContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  radioButtonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
   },
-  text: {
-    marginRight: 10,
+  radioLabel: {
+    marginLeft: 10,
   },
 });
 

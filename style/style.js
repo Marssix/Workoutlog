@@ -8,7 +8,7 @@ export default StyleSheet.create({
   header: {
     marginTop: 30,
     marginBottom: 15,
-    backgroundColor: '#F64DFC',
+    backgroundColor: '#72E2B4',
     flexDirection: 'row',
     justifyContent: 'center'
   },
@@ -19,7 +19,7 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     marginTop: 20,
-    backgroundColor: '#F64DFC',
+    backgroundColor: '#72E2B4',
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'center'
@@ -43,5 +43,11 @@ export default StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     margin: 10,
-  }
+  },
+  totalContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around', // Adjust as needed
+    alignItems: 'center',
+    marginVertical: 10,
+  },
 });

@@ -15,12 +15,6 @@ const AddExerciseScreen = () => {
   const [exerciseType, setExerciseType] = useState(''); // Added state for exercise type
 
   const handleAddExercise = () => {
-    // Validate distance and duration
-    if (isNaN(distance) || isNaN(duration) || distance < 0 || duration < 0) {
-      Alert.alert('Error', 'Distance and duration must be non-negative numeric values.');
-      return;
-    }
-
     // Validate exercise type
     if (!exerciseType) {
       Alert.alert('Error', 'Please select an exercise type.');
@@ -34,8 +28,6 @@ const AddExerciseScreen = () => {
       duration: parseFloat(duration),
       date: date.toISOString(), // Convert date to ISO string
     };
-
-    console.log('Exercise Data:', exerciseData);
 
     // Add the exercise to the context
     addExercise(exerciseData);
@@ -77,14 +69,14 @@ const AddExerciseScreen = () => {
           style={styles.input}
           placeholder="Distance (km)"
           value={distance}
-          onChangeText={setDistance}
+          onChangeText={text => setDistance(text.replace(/[^0-9.]/g, ''))}
           keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
           placeholder="Duration (min)"
           value={duration}
-          onChangeText={setDuration}
+          onChangeText={text => setDuration(text.replace(/[^0-9]/g, ''))}
           keyboardType="numeric"
         />
         <View style={styles.centered}>
